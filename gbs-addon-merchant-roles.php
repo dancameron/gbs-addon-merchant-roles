@@ -1,42 +1,29 @@
 <?php
 /*
-Plugin Name: Group Buying Site - Groupon Importer
+Plugin Name: Group Buying Site - Merchant Roles
 Version: 1.0.1
-Description: Import deals from Groupon
+Description: Provide a method to select a user's role when adding to the merchant. A basic set of filters are available.
 Plugin URI: http://groupbuyingsite.com/
-Author: GroupBuyingSite.com
-Author URI: http://groupbuyingsite.com/features
+Author: Sprout Venture
+Author URI: http://sproutventure.com/wordpress
 Plugin Author: Dan Cameron
-Plugin Author URI: http://sproutventure.com/
-Contributors: Dan Cameron, Jonathan Brinley
+Contributors: Dan Cameron
+Text Domain: group-buying
+Domain Path: /lang
 Text Domain: group-buying
 */
 
+define ('GB_MERCHANT_ROLES_URL', plugins_url( '', __FILE__) );
+define( 'GB_MERCHANT_ROLES_PATH', WP_PLUGIN_DIR . '/' . basename( dirname( __FILE__ ) ) );
 
-/**
- * Load all the plugin files and initialize appropriately
- *
- * @return void
- */
-if ( !function_exists('gbs_groupon_importer_load') ) { // play nice
-	function gbs_groupon_importer_load( $addons ) {
-		$gbs_min_version = '4.5';
-		if ( version_compare( Group_Buying::GB_VERSION, $gbs_min_version, '>=' ) ) {
-			if ( isset($addons['gbs_importer_framework']) ) {
-				$addons['gbs_importer_groupon'] = array(
-					'label' => __( 'API Importer - Groupon' ),
-					'description' => __( 'Import deals from Groupon' ),
-					'files' => array(
-						dirname(__FILE__).'/GBS_Groupon_Admin.php',
-					),
-					'callbacks' => array(
-						array( 'GBS_Groupon_Admin', 'init' ),
-					),
-				);
-			}
-			return $addons;
-		}
+// Load after all other plugins since we need to be compatible with groupbuyingsite
+add_action( 'plugins_loaded', 'gb_load_merchant_roles' );
+function gb_load_merchant_roles() {
+	$gbs_min_version = '4.5';
+	if ( class_exists( 'Group_Buying_Controller' ) && version_compare( Group_Buying::GB_VERSION, $gbs_min_version, '>=' ) ) {
+		require_once 'classes/GBS_Merchant_Roles_Addon.php';
+
+		// Hook this plugin into the GBS add-ons controller
+		add_filter( 'gb_addons', array( 'GBS_Merchant_Roles_Addon', 'gb_addon' ) );
 	}
-
-	add_filter('gb_addons', 'gbs_groupon_importer_load', 10, 1);
 }
