@@ -14,7 +14,7 @@ class GBS_Merchant_Roles_Addon {
 		GBS_Merchant_Role_Controller::init();
 
 		// Template tags
-		require_once GB_DYN_CHARITY_PATH . '/library/template-tags.php';
+		require_once GB_MERCHANT_ROLES_PATH . '/library/template-tags.php';
 	}
 
 	public static function gb_addon( $addons ) {
