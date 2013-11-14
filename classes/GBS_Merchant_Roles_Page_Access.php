@@ -62,6 +62,7 @@ class GBS_Merchant_Roles_Page_Access extends GBS_Merchant_Roles_Controller {
 	public function prevent_deal_submission_access() {
 		// Prevent deal submission access
 		if ( gb_on_deal_submit_page() ) {
+			gb_set_message('You are not allowed to submit any deals with your access level.');
 			self::redirect_to_dash();
 		}
 	}
@@ -70,6 +71,7 @@ class GBS_Merchant_Roles_Page_Access extends GBS_Merchant_Roles_Controller {
 		// Prevent merchant purchases report access
 		if ( GB_Router_Utility::is_on_page( Group_Buying_Reports::REPORT_QUERY_VAR ) || GB_Router_Utility::is_on_page( Group_Buying_Reports::CSV_QUERY_VAR )) {
 			if ( isset( $_GET['report'] ) && $_GET['report'] == 'merchant_purchases' ) {
+				gb_set_message('You are not allowed to view this report with your access level.');
 				self::redirect_to_dash();
 			}
 		}
@@ -79,6 +81,7 @@ class GBS_Merchant_Roles_Page_Access extends GBS_Merchant_Roles_Controller {
 		// Prevent merchant purchases report access
 		if ( GB_Router_Utility::is_on_page( Group_Buying_Reports::REPORT_QUERY_VAR ) || GB_Router_Utility::is_on_page( Group_Buying_Reports::CSV_QUERY_VAR )) {
 			if ( isset( $_GET['report'] ) && $_GET['report'] == 'merchant_purchase' ) {
+				gb_set_message('You are not allowed to view this report with your access level.');
 				self::redirect_to_dash();
 			}
 		}
@@ -87,6 +90,7 @@ class GBS_Merchant_Roles_Page_Access extends GBS_Merchant_Roles_Controller {
 	public function prevent_deal_editing() {
 		// Prevent merchant purchases report access
 		if ( Group_Buying_Deals_Edit::is_edit_page() ) {
+			gb_set_message('You are not allowed to edit this deal with your access level.');
 			self::redirect_to_dash();
 		}
 	}
