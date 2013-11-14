@@ -5,13 +5,21 @@ class GBS_Merchant_Roles_Addon {
 	
 	public static function init() {
 
+		// Controller
+		require_once 'GBS_Merchant_Roles_Controller.php';
+		GBS_Merchant_Roles_Controller::init();
+
 		// Administration
 		require_once 'GBS_Merchant_Roles_Admin.php';
 		GBS_Merchant_Roles_Admin::init();
 
-		// Controller
-		require_once 'GBS_Merchant_Role_Controller.php';
-		GBS_Merchant_Role_Controller::init();
+		// Report Filtering
+		require_once 'GBS_Merchant_Roles_Reports.php';
+		GBS_Merchant_Roles_Reports::init();
+
+		// Front-end Filtering
+		require_once 'GBS_Merchant_Roles_Page_Access.php';
+		GBS_Merchant_Roles_Page_Access::init();
 
 		// Template tags
 		require_once GB_MERCHANT_ROLES_PATH . '/library/template-tags.php';

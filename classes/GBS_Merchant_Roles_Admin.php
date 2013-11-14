@@ -3,7 +3,7 @@
 /**
 * 
 */
-class GBS_Merchant_Roles_Admin extends Group_Buying_Controller {
+class GBS_Merchant_Roles_Admin extends GBS_Merchant_Roles_Controller {
 	const OPTION_NAME = 'authorized_user_role';
 
 	public static function init() {
@@ -21,7 +21,7 @@ class GBS_Merchant_Roles_Admin extends Group_Buying_Controller {
 
 	public function filter_merchant_authorized_users_metabox_args( $args ) {
 		$args['merchant_user_role_option_name'] = self::OPTION_NAME;
-		$args['merchant_user_roles'] = GBS_Merchant_Role_Controller::get_roles();
+		$args['merchant_user_roles'] = GBS_Merchant_Roles_Controller::get_roles();
 		return $args;
 	}
 
@@ -34,8 +34,8 @@ class GBS_Merchant_Roles_Admin extends Group_Buying_Controller {
 			if ( isset( $_POST[self::OPTION_NAME] ) && $_POST[self::OPTION_NAME] != '' ) {
 				$authorized_user_id = $_POST['authorized_user'];
 				$account_id = Group_Buying_Account::get_account_id_for_user( $authorized_user_id );
-				$role = $_POST[self::OPTION_NAME];
-				GBS_Merchant_Role_Controller::set_user_role( $role, $account_id, $post_id );
+				$roles = $_POST[self::OPTION_NAME];
+				GBS_Merchant_Roles_Controller::set_user_roles( $roles, $account_id, $post_id );
 			}
 		}
 	}

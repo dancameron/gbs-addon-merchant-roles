@@ -10,9 +10,9 @@
 			if ( !empty( $user->user_email ) ) {
 				$display .= " ($user->user_email)";
 			}
-			$role = gb_authorized_user_merchant_role( Group_Buying_Account::get_account_id_for_user( $user_id ) );
-			if ( $role ) {
-				$display .= ' &mdash; '.gb_merchant_role_title($role);
+			$roles = gb_list_users_roles( Group_Buying_Account::get_account_id_for_user( $user_id ) );
+			if ( $roles != '' ) {
+				$display .= ' &mdash; ' . $roles;
 			}
 			echo "$display<br />";
 		} ?>
@@ -82,14 +82,22 @@
 					}
 				} ?>
 		</select>
-		<select id="authorized_user_role" name="<?php echo $merchant_user_role_option_name ?>">
-			<?php
-				foreach ( $merchant_user_roles as $name => $title ) {
-				 	echo '<option value="'.$name.'" '.selected( $name, $user_role, FALSE ).'>'.$title.'</option>';
-				 } 
-				?>
-		</select>
 	<?php endif ?>
+
+	<script type="text/javascript">
+		jQuery(document).ready(function($){
+			$("#authorized_user_role").select2({
+				placeholder: "<?php gb_e('Select user roles') ?>"
+			});
+		});
+	</script>
+	<select multiple id="authorized_user_role" name="<?php echo $merchant_user_role_option_name ?>[]">
+		<?php
+			foreach ( $merchant_user_roles as $name => $title ) {
+			 	echo '<option value="'.$name.'" '.selected( $name, $user_role, FALSE ).'>'.$title.'</option>';
+			 } 
+			?>
+	</select>
 </p>
 
 <p>
@@ -106,11 +114,11 @@
 				if ( !empty( $user->user_email ) ) {
 					$display .= " ($user->user_email)";
 				}
-				$role = gb_authorized_user_merchant_role( Group_Buying_Account::get_account_id_for_user( $user_id ) );
-				if ( $role ) {
-					$display .= ' &mdash; '.gb_merchant_role_title($role);
+				
+				$roles = gb_list_users_roles( Group_Buying_Account::get_account_id_for_user( $user_id ) );
+				if ( $roles != '' ) {
+					$display .= ' &mdash; ' . $roles;
 				}
-
 				echo "<option value=\"$user->ID\">$display</option>";
 			} ?>
 	</select>
