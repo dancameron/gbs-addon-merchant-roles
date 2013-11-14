@@ -91,6 +91,9 @@
 			});
 		});
 	</script>
+	<style type="text/css">
+		#s2id_authorized_user_role { min-width: 250px; }
+	</style>
 	<select multiple id="authorized_user_role" name="<?php echo $merchant_user_role_option_name ?>[]">
 		<?php
 			foreach ( $merchant_user_roles as $name => $title ) {
