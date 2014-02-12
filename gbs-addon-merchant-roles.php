@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Group Buying Site - Merchant Roles
-Version: 1.0.1
+Version: 1.0.2
 Description: Provide a method to select a user's role when adding to the merchant. A basic set of filters are available.
 Plugin URI: http://groupbuyingsite.com/
 Author: Sprout Venture
